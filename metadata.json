@@ -1,0 +1,26 @@
+{
+	"name": "rails-server-chef",
+	"description": "Setup for a smashing good Rails Server",
+	"long_description": "",
+	"maintainer": "Björn Lennartsson",
+	"maintainer_email": "bjorn@ratherunique.se",
+	"license": "none",
+	"platforms": {
+		"ubuntu": ">= 0.0.0"
+	},
+	"dependencies": {
+    "ruby_build": "1.2.0",
+    "ruby_rbenv": "2.1.2"
+  },
+	"recommendations": {},
+	"suggestions": {},
+	"conflicting": {},
+	"providing": {},
+	"replacing": {},
+	"attributes": {},
+	"groupings": {},
+	"recipes": {
+		"rails-server-chef": "Sets up a Rails server"
+	},
+	"version": "0.0.1"
+}
