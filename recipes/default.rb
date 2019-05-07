@@ -1,3 +1,11 @@
+packages = %w(
+  nginx
+)
+
+packages.each { |name| package name }
+
+# Setup Ruby
+
 global_version = node[:rbenv][:global] || '2.6.0'
 
 rbenv_system_install global_version
