@@ -10,7 +10,8 @@
 	},
 	"dependencies": {
     "ruby_build": "1.2.0",
-    "ruby_rbenv": "2.1.2"
+    "ruby_rbenv": "2.1.2",
+		"postgresql": "~> 7.1.4"
   },
 	"recommendations": {},
 	"suggestions": {},
@@ -22,5 +23,5 @@
 	"recipes": {
 		"rails-server-chef": "Sets up a Rails server"
 	},
-	"version": "0.0.6"
+	"version": "0.0.7"
 }

@@ -27,8 +27,9 @@ service 'nginx' do
   action :restart
 end
 
+
 ###############
-# Setup Ruby
+# Setup Ruby w/ rbenv
 ###############
 
 global_version = node[:rbenv][:global] || '2.6.0'
