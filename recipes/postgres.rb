@@ -21,7 +21,7 @@ end
 
 node[:postgres][:users].each do |user|
   postgresql_user user[:username] do
-    password user[:password]
+    encrypted_password user[:encrypted_password]
     createdb user[:create_db] || true
     createrole user[:create_role] || false
     superuser user[:superuser] || false
