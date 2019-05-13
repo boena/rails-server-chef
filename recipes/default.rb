@@ -95,11 +95,11 @@ if node[:site] and node[:site][:domain]
   bash 'setting up file system for site' do
     user 'root'
     code <<-EOC
-      mkdir /var/www/<%= node[:site][:domain] %>
-      mkdir /var/www/<%= node[:site][:domain] %>/shared
-      mkdir /var/www/<%= node[:site][:domain] %>/shared/config
-      chown -R www-data:www-data /var/www/<%= node[:site][:domain] %>
-      chgrp -R www-data /var/www/<%= node[:site][:domain] %>
+      mkdir /var/www/#{ node[:site][:domain] }
+      mkdir /var/www/#{ node[:site][:domain] }/shared
+      mkdir /var/www/#{ node[:site][:domain] }/shared/config
+      chown -R www-data:www-data /var/www/#{ node[:site][:domain] }
+      chgrp -R www-data /var/www/#{ node[:site][:domain] }
     EOC
   end
 
