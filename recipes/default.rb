@@ -1,5 +1,6 @@
 packages = %w(
   nginx
+  logrotate
 )
 
 packages.each { |name| package name }
@@ -84,3 +85,29 @@ rbenv_rehash global_version
 #     apt-get install yarn
 #   EOC
 # end
+
+
+###############
+# Setup Site and Log rotation
+###############
+
+if node[:site] and node[:site][:domain]
+  bash 'setting up file system for site' do
+    user 'root'
+    code <<-EOC
+      mkdir /var/www/<%= node[:site][:domain] %>
+      mkdir /var/www/<%= node[:site][:domain] %>/shared
+      mkdir /var/www/<%= node[:site][:domain] %>/shared/config
+      chown -R www-data:www-data /var/www/<%= node[:site][:domain] %>
+      chgrp -R www-data /var/www/<%= node[:site][:domain] %>
+    EOC
+  end
+
+  template "/etc/logrotate.d/#{node[:site][:domain].gsub('\.', '_')}" do
+    owner "root"
+    group "syslog"
+    mode "0644"
+    source "logrotate.conf.erb"
+    variables(site_shared_path: "/var/www/#{node[:site][:domain]}/shared")
+  end
+end
