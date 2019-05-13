@@ -12,7 +12,7 @@ end
 if node[:redis] and node[:redis][:password]
   p 'trying to set redis password'
   bash 'set redis password' do
-    user 'redis'
+    user 'root'
     code <<-EOC
       "sed -i 's/^# requirepass foobared/requirepass #{node[:redis][:password]}/g' /etc/redis/redis.conf"
     EOC
