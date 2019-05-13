@@ -18,7 +18,6 @@
   endscript
 
   postrotate
-    nginx_pid="/run/nginx.pid"
-    [ ! -f $nginx_pid ] || kill -USR1 `cat $nginx_pid`
+    [ ! -f /run/nginx.pid ] || kill -USR1 `cat /run/nginx.pid`
   endscript
 }
