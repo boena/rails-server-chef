@@ -10,6 +10,7 @@ template "/etc/redis/redis.conf" do
 end
 
 if node[:redis] and node[:redis][:password]
+  p 'trying to set redis password'
   bash 'set redis password' do
     user 'root'
     code <<-EOC
