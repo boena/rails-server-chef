@@ -6,19 +6,8 @@ template "/etc/redis/redis.conf" do
   owner "redis"
   group "redis"
   mode "0640"
-  source "redis.conf.txt"
-end
-
-if node[:redis] and node[:redis][:password]
-  redis_config = '/etc/redis/redis.conf'
-
-  p 'trying to set redis password'
-  bash 'set redis password' do
-    user 'root'
-    code <<-EOC
-      "sed -i 's/^# requirepass foobared/requirepass #{node[:redis][:password]}/g' #{redis_config}"
-    EOC
-  end
+  source "redis.conf.erb"
+  variables(redis_password: node[:redis][:password])
 end
 
 service 'redis' do
