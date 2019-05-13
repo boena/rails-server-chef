@@ -10,11 +10,13 @@ template "/etc/redis/redis.conf" do
 end
 
 if node[:redis] and node[:redis][:password]
+  redis_config = '/etc/redis/redis.conf'
+
   p 'trying to set redis password'
   bash 'set redis password' do
     user 'root'
     code <<-EOC
-      "sed -i 's/^# requirepass foobared/requirepass #{node[:redis][:password]}/g' /etc/redis/redis.conf"
+      "sed -i 's/^# requirepass foobared/requirepass #{node[:redis][:password]}/g' #{redis_config}"
     EOC
   end
 end
