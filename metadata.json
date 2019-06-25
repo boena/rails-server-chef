@@ -23,5 +23,5 @@
 	"recipes": {
 		"rails-server-chef": "Sets up a Rails server"
 	},
-	"version": "0.0.22"
+	"version": "0.0.23"
 }
