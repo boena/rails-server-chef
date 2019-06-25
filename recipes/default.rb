@@ -98,6 +98,15 @@ end
 ###############
 
 if node[:site] and node[:site][:domain]
+  if !File.exist?('/etc/ssl/private/uptrail-selfsigned.key')
+    bash 'Creating Self-signed SSL certificate' do
+      user 'root'
+      code <<-EOC
+        openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/uptrail-selfsigned.key -out /etc/ssl/certs/uptrail-selfsigned.crt -subj "/C=SE/ST=Stockholm/L=Stockholm/O=Uptrail/OU=IT/CN=#{node[:site][:domain]}"
+      EOC
+    end
+  end
+
   bash 'setting up file system for site' do
     user 'root'
     code <<-EOC
