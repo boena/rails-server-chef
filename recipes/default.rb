@@ -48,7 +48,7 @@ end
 rbenv_global global_version
 
 # Setup gems
-gems = node[:rbenv][:gems] || ['bundler']
+gems = node[:rbenv][:gems] || ['bundler', 'puma']
 
 versions.each do |version|
   gems.each do |gem|
