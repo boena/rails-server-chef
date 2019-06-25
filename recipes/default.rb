@@ -105,6 +105,7 @@ if node[:site] and node[:site][:domain]
       mkdir -p /var/www/#{node[:site][:domain]}/shared/pids
       mkdir -p /var/www/#{node[:site][:domain]}/shared/sockets
       mkdir -p /var/www/#{node[:site][:domain]}/shared/public
+      mkdir -p /var/www/#{node[:site][:domain]}/shared/log
       chown -R www-data:www-data /var/www/#{node[:site][:domain]}
       chgrp -R www-data /var/www/#{node[:site][:domain]}
     EOC
@@ -136,6 +137,12 @@ if node[:site] and node[:site][:domain]
         ln -s /etc/nginx/sites-available/#{app_name} /etc/nginx/sites-enabled/#{app_name}
       EOC
     end
+  end
+
+  service 'nginx' do
+    provider Chef::Provider::Service::Systemd
+    supports :restart => true
+    action :restart
   end
 
   template "/etc/logrotate.d/#{app_name}" do
