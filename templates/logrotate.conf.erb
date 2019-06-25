@@ -7,7 +7,7 @@
   delaycompress
 
   lastaction
-    pid=<%= "#{@site_shared_path}/pids/unicorn.pid" %>
+    pid=<%= "#{@site_shared_path}/pids/puma.pid" %>
     test -s $pid && kill -USR1 "$(cat $pid)"
   endscript
 

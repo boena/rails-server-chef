@@ -65,8 +65,6 @@ rbenv_rehash global_version
 # Setup Node and Yarn
 ###############
 
-# TODO: Fix so it check if exists before downloading every time
-
 if !File.exist?('/usr/bin/node') and !File.exist?('/usr/local/bin/node')
   bash 'node' do
     user 'root'
@@ -103,15 +101,44 @@ if node[:site] and node[:site][:domain]
   bash 'setting up file system for site' do
     user 'root'
     code <<-EOC
-      mkdir /var/www/#{node[:site][:domain]}
-      mkdir /var/www/#{node[:site][:domain]}/shared
-      mkdir /var/www/#{node[:site][:domain]}/shared/config
+      mkdir -p /var/www/#{node[:site][:domain]}/shared/config
+      mkdir -p /var/www/#{node[:site][:domain]}/shared/pids
+      mkdir -p /var/www/#{node[:site][:domain]}/shared/sockets
+      mkdir -p /var/www/#{node[:site][:domain]}/shared/public
       chown -R www-data:www-data /var/www/#{node[:site][:domain]}
       chgrp -R www-data /var/www/#{node[:site][:domain]}
     EOC
   end
 
-  template "/etc/logrotate.d/#{node[:site][:domain].gsub('.', '-')}" do
+  app_name = node[:site][:domain].gsub('.', '-')
+
+  if File.exist?('/etc/nginx/sites-enabled/default')
+    bash 'Disabling default Nginx site' do
+      user 'root'
+      code <<-EOC
+        rm /etc/nginx/sites-enabled/default
+      EOC
+    end
+  end
+
+  template "/etc/nginx/sites-available/#{app_name}" do
+    owner 'deploy'
+    group 'deploy'
+    mode '0640'
+    source 'nginx-site-config.conf.erb'
+    variables(site_shared_path: "/var/www/#{node[:site][:domain]}/shared", app_name: app_name, domain: node[:site][:domain])
+  end
+
+  if !File.exist?("/etc/nginx/sites-enabled/#{app_name}")
+    bash 'Enabling Nginx site' do
+      user 'root'
+      code <<-EOC
+        ln -s /etc/nginx/sites-available/#{app_name} /etc/nginx/sites-enabled/#{app_name}
+      EOC
+    end
+  end
+
+  template "/etc/logrotate.d/#{app_name}" do
     owner "root"
     group "syslog"
     mode "0644"
