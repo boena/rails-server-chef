@@ -10,6 +10,15 @@ if !node[:postgres] or !node[:postgres][:users] or !node[:postgres][:users].any?
   raise ArgumentError.new('You need to provide at least one local user.')
 end
 
+apt_update
+
+packages = %w(
+  postgresql-contrib
+  libpq-dev
+)
+
+packages.each { |name| package name }
+
 postgresql_server_install 'PostgreSQL Server install' do
   action :install
 end

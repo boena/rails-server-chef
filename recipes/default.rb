@@ -115,8 +115,8 @@ if node[:site] and node[:site][:domain]
       mkdir -p /var/www/#{node[:site][:domain]}/shared/sockets
       mkdir -p /var/www/#{node[:site][:domain]}/shared/public
       mkdir -p /var/www/#{node[:site][:domain]}/shared/log
-      chown -R www-data:www-data /var/www/#{node[:site][:domain]}
-      chgrp -R www-data /var/www/#{node[:site][:domain]}
+      chown -R deploy:deploy /var/www/#{node[:site][:domain]}
+      chgrp -R deploy /var/www/#{node[:site][:domain]}
     EOC
   end
 
