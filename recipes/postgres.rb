@@ -13,7 +13,6 @@ end
 apt_update
 
 packages = %w(
-  postgresql-contrib
   libpq-dev
 )
 
