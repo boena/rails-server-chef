@@ -21,16 +21,9 @@ end
 
 node[:postgres][:users].each do |user|
   postgresql_user user[:username] do
-    encrypted_password user[:encrypted_password]
+    password user[:password]
     createdb user[:create_db] || true
     createrole user[:create_role] || false
     superuser user[:superuser] || false
   end
 end
-
-packages = %w(
-  postgresql-contrib
-  libpq-dev
-)
-
-packages.each { |name| package name }
