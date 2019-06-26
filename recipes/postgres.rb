@@ -37,6 +37,8 @@ postgresql_database node[:postgres][:database_name] do
   action :create
 end
 
-postgresql_server_conf 'PostgreSQL Config' do
-  notifies :reload, 'service[postgresql]'
+service 'postgresql' do
+  provider Chef::Provider::Service::Systemd
+  supports :restart => true
+  action :restart
 end
