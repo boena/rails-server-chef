@@ -6,6 +6,10 @@ if !node[:postgres] or !node[:postgres][:password]
   raise ArgumentError.new('You need to provide a password for Postgres.')
 end
 
+if !node[:postgres] or !node[:postgres][:database_name]
+  raise ArgumentError.new('You need to provide a database name for Postgres.')
+end
+
 if !node[:postgres] or !node[:postgres][:users] or !node[:postgres][:users].any?
   raise ArgumentError.new('You need to provide at least one local user.')
 end
@@ -26,4 +30,13 @@ node[:postgres][:users].each do |user|
     createrole user[:create_role] || false
     superuser user[:superuser] || false
   end
+end
+
+postgresql_database node[:postgres][:postgresql_database] do
+  owner node[:postgres][:users].first[:username]
+  action :create
+end
+
+postgresql_server_conf 'PostgreSQL Config' do
+  notifies :reload, 'service[postgresql]'
 end
