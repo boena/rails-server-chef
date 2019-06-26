@@ -32,7 +32,7 @@ node[:postgres][:users].each do |user|
   end
 end
 
-postgresql_database node[:postgres][:postgresql_database] do
+postgresql_database node[:postgres][:database_name] do
   owner node[:postgres][:users].first[:username]
   action :create
 end
