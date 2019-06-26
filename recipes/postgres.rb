@@ -33,7 +33,7 @@ node[:postgres][:users].each do |user|
 end
 
 postgresql_database node[:postgres][:database_name] do
-  locale 'sv_SE.utf8'
+  locale 'C.UTF-8'
   owner node[:postgres][:users].first[:username]
   action :create
 end
