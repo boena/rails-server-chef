@@ -9,8 +9,8 @@
 		"ubuntu": ">= 0.0.0"
 	},
 	"dependencies": {
-    "ruby_build": "1.2.0",
-    "ruby_rbenv": "2.1.2",
+    "ruby_build": "2.1.1",
+    "ruby_rbenv": "2.5.1",
 		"postgresql": "~> 7.1.4"
   },
 	"recommendations": {},

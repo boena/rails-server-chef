@@ -1,6 +1,7 @@
 packages = %w(
   nginx
   logrotate
+  libpq-dev
 )
 
 packages.each { |name| package name }
